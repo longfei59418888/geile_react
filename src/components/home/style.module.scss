@@ -1,0 +1,66 @@
+@import "../../styles/mixin";
+.head-box{ height: 2.9rem;padding: .4rem .3rem 0;  background: #29ADFD;  }
+.head-top{  @extend .flex-mixin-center-align;  height:.88rem;
+  .search-box{@extend .flex-mixin-center-align;  height:.62rem;background-color: #29A8F1;border-radius: .64rem;flex: 1;
+    border: 1px solid #28A3E9;padding: 0 .2rem;
+    p:nth-child(1){width: 1.45rem;font-size: .24rem;color: #fff;height: .3rem;
+      @extend .flex-mixin-center-align;border-right: 1px solid #fff;padding-left: .08rem;
+      &:after{content:'';display:inline-block;background-image: url("../../images/icon/jiantou.png");height: .32rem;width: .32rem;
+        background-size: 100% 100%;vertical-align: bottom;margin-left: .06rem;}
+    }
+    p:nth-child(2){  flex: 1;@extend .flex-mixin-center;height: .6rem;color: #fff;font-size: .24rem;
+      i{background-image: url("../../images/icon/sousuo.png");height: .32rem;width: .32rem;
+        background-size: 100% 100%;margin-right: .05rem;}
+    }
+  }
+  .message{width: .75rem;@extend .flex-mixin-center-align;@extend .flex-justify-content-end;opacity: .8;
+    &:after{content: '';@include setBackground("../../images/icon/bellNoShadow.png",.48rem,.48rem);  }
+  }
+}
+.head-info{padding-right: .75rem;@extend .flex-mixin-center-align;margin-top: .14rem;padding-left: .04rem;
+  .head-right{align-self:flex-end;width: .9rem;height: .68rem;
+    i{@include setBackground("../../images/icon/scanSmall.png",.64rem,.64rem)}
+    p{font-size: .24rem;color: #fff;opacity: .8;margin-top: .14rem;}
+  }
+  .head-left{flex: 1;height: .68rem;text-align: left;
+    header{display: flex;font-family: Kollektif;padding-left: .04rem;
+      >p{font-size: 0.74rem; color: #fff;width: .7rem;}
+      >aside{flex: 1;padding-left: .1rem;
+        p{font-size: .24rem;  line-height: 0.34rem;    letter-spacing: 3px;color: #fff;}
+      }
+    }
+    footer{color: #fff;font-size: .24rem;padding-left: .04rem;line-height: .5rem;@extend .flex-mixin-center-align;
+      &:after{content: '';@include setBackground('../../images/icon/eye_close.png',.38rem,.22rem);
+        margin-left: .2rem;  }
+    }
+  }
+}
+.nav{  padding: 0 .15rem;background-color: #fff;padding-bottom: .3rem;height: 3.1rem;
+    ul{overflow: hidden;
+      li{float: left;width: 25%;height: 1.2rem;margin-top:.18rem;
+        img{width: 1.63rem;height: 1.2rem;}
+        p{font-size: .24rem;position: relative;top: -.4rem;}
+      }
+    }
+}
+.slide{margin-top: .15rem;background-color: #fff;height: 2rem;
+  .aside{height: 2rem;}
+  img{width: 100%;}
+}
+
+.info{
+  img{width: 100%;margin-top: .15rem;height: 2.1rem;}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

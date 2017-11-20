@@ -1,0 +1,48 @@
+@import "../../styles/mixin";
+.search-box{@extend .flex-mixin-center-align;  height:.62rem;background-color: #F4F4F4;border-radius: .64rem;flex: 1;
+  border: 1px solid #28A3E9;padding: 0 .2rem;
+  p{  flex: 1;@extend .flex-mixin-center;height: .6rem;color: #aaa;font-size: .24rem;
+    i{background-image: url("../../images/icon/icon_35.png");height: .38rem;width: .38rem;
+      background-size: 100% 100%;margin-right: .05rem;position: relative;top: -1px;}
+  }
+}
+.nav{padding: 0 0.25rem;background-color: #fff;border-bottom: 1px solid #EEEEEE;overflow: hidden;
+  position: relative;z-index: 100;
+  li{float: left;width: 33.33%;height: .8rem;  font-size: .26rem;color: #666;
+    i{content: '';@include setBackground("../../images/icon/icon_33.png",.28rem,.28rem);margin-left: .06rem;}
+  }
+}
+
+.nav-list{overflow: hidden;height: 8rem;background-color: #fff;
+  >aside{width:33.33vw;float: left;height: 100%;overflow: scroll;
+    p{height: .8rem;display: flex;align-items: center;color: #555;font-size: .26rem;padding:0 .25rem;
+      justify-content: space-between;border-bottom: 1px solid #EEEEEE;
+      i{@include setBackground("../../images/icon/icon_46.png",.36rem,.36rem);}
+      &.active{color: #29adfd;background-color: #F4F4F4;
+        i{@include setBackground("../../images/icon/icon_37.png",.42rem,.42rem);}
+      }
+    }
+  }
+  >ul{width: 66.66vw;float: left;overflow: scroll;height: 100%;background-color: #EEEEEE;
+    p{height: .8rem;display: flex;align-items: center;color: #555;font-size: .26rem;padding:0 .25rem;
+      justify-content: center;border-bottom: 1px solid #E5E5E5;
+      &.active{color: #29adfd;background-color: #F4F4F4;
+        i{@include setBackground("../../images/icon/icon_36.png",.42rem,.42rem);margin-right: .06rem;position: relative;top: -1px;}
+      }
+    }
+  }
+}
+.city-list{overflow: hidden;max-height: 8rem;background-color: #fff;width: 100vw;padding: .15rem 0;
+  >aside{width:100vw;float: left;height: 100%;overflow: scroll;
+    p{height: .8rem;display: flex;align-items: center;color: #555;font-size: .26rem;padding-left: .24rem;
+      &.active{
+        i{@include setBackground("../../images/icon/icon_36.png",.42rem,.42rem);margin-right: .06rem;}
+      }
+    }
+  }
+}
+
+
+.bg{position: absolute;left: 0;top: 0;height: 100vh;width: 100vw;background-color: rgba(0,0,0,.4);z-index: 98;
+  .box{top: 1.72rem;position: relative}
+}

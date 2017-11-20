@@ -1,0 +1,93 @@
+@import "mixin";
+.slide-enter,.slide-exit-active{
+  -webkit-transform: translate(100%, 0);  transform: translate(100%, 0);
+}
+/*路由切换动画——左移动*/
+.left-enter {
+  position: absolute;
+  top: 0;
+  background: #fff;
+  z-index: 10000;
+  opacity: 1;
+  transform: translateX(100%);
+}
+.left-enter.left-enter-active { //结束
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.4s ease-out;
+}
+.left-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+.left-leave.left-leave-active { //结束
+  opacity: 1;
+  transform: translateX(-50%);
+  transition: all 0.4s ease-out;
+}
+/*路由切换动画——右移动*/
+.right-enter {
+  transform: translateX(-100%);
+}
+.right-enter.right-enter-active {
+  transform: translateX(0);
+  transition: all 0.4s ease-out;
+}
+.right-leave {
+  position: absolute;
+  top: 0;
+  background: #fff;
+  z-index: 10000;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+//store_nav
+.show_store-enter { position: absolute;  top: 0;   z-index: 10000;  opacity: 1;  transform: translateY(-100%);  }
+.show_store-enter.show_store-enter-active {  opacity: 1;  transform: translateX(0);  transition: all 0.4s ease-out;  }
+.show_store-leave {  opacity: 1;  transform: translateY(0);  }
+.show_store-leave.show_store-leave-active {  opacity: 1;  transform: translateY(50%);  transition: all 0.4s ease-out;  }
+
+
+//去掉滚动条
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+p{line-height: 1;margin: 0;padding: 0;}
+ul{list-style: none;}
+*{box-sizing: border-box;margin: 0;padding: 0;}
+a,a:active,a:hover{text-decoration: none;color: #666;background: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)}
+.right-leave.right-leave-active {
+  opacity: 1;
+  transform: translateX(100%);
+  transition: all 0.4s ease-out;
+}
+.common_bottom{position: absolute;bottom: 0;width: 100%;background-color: #fff;border-top: 1px solid #F0F0F0;z-index: 999;
+  a{display: flex;height: .9rem;text-align: center;width: 33.3%;float: left;color: #CAD0D5;font-size: .22rem;padding-top: .06rem;
+    flex-direction: column;align-items: center;span{letter-spacing: 1px}
+    i{background-image: url('../images/icon/cjc_icon.png');background-size: 1.32rem;height: .48rem;width: .48rem;}
+    &:nth-child(1){i{background-position: -0.7rem 0;}}
+    &:nth-child(2){i{background-position: -0.7rem -0.56rem;}}
+    &:nth-child(3){i{background-position: -.69rem -1.14rem;}}
+    &.active{
+      &:nth-child(1){i{background-position: 0 0;}};
+      &:nth-child(2){i{background-position: 0 -0.56rem;}};
+      &:nth-child(3){i{background-position: 0.02rem -1.14rem;}};
+      color: #30B0FA;}
+  }
+}
+.common_header{display: flex;height: .92rem;background-color: #30B0FA;padding-top: .04rem;position: relative;z-index: 100;
+  .c_left,.c_right{width: 1rem;display: flex;justify-content: center;align-items: center;height: .88rem;}
+  .c_content{flex: 1;justify-content: center;align-items: center;height: .88rem;display: flex}
+  .back{i{@include setBackground('../images/icon/back-satreo.png',.48rem,.48rem);}}
+}
+
+//字体
+@font-face{
+  font-family: 'Kollektif';
+  src: url('./font/Kollektif.ttf');
+}
+
