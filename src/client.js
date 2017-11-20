@@ -4,11 +4,11 @@ import { AppContainer } from 'react-hot-loader';
 import { Router, Route, hashHistory } from 'react-router';
 import { Provider } from 'react-redux'
 import initStore from './stores/index'
-import axios from 'axios'
+import global_config from './config'
 
 require('./styles/common.scss')
 
-
+window.GLOBAL_CONFIG = global_config;
 
 
 
