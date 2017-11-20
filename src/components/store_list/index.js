@@ -6,7 +6,6 @@ import iScroll from 'iscroll/build/iscroll-probe';
 import ReactIScroll from 'reactjs-iscroll';
 import { CSSTransitionGroup } from 'react-transition-group' // ES6
 import industry from '../../config/industry.json'
-console.log(actions)
 import style from './index.module.scss'
 import CHead  from '../common/header'
 import image1 from '../../images/icon/bellNoShadow.png'

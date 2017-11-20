@@ -8,8 +8,6 @@ import global_config from './config'
 
 require('./styles/common.scss')
 
-window.GLOBAL_CONFIG = global_config;
-
 
 
 //  页面切换
