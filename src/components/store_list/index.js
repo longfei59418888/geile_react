@@ -19,9 +19,12 @@ class AppComponent extends React.Component {
   constructor(props){
     super(props)
     const {tag,sub} = this.props.params;
-    let tagId = 0
+    let tagName = '',subName=''
     industry.forEach((item,i)=>{
-      if(item.name == tag) tagId = item.id
+      if(item.id == tag) tagName = item.name
+      item.sub.forEach((it,i)=>{
+        if(it.id == sub) subName = item.name
+      })
     })
     this.postion = {"cityId" : "77", "city" : "深圳市",
       "address" : "广东省深圳市南山区高新南一道9-南门",
@@ -30,16 +33,33 @@ class AppComponent extends React.Component {
     this.state={
       index:0, nav:[], showNav: false, //下拉选择
       cityId:77, districtId:0, districtName:0,  //城市和地区ID
-      tagId:tagId, tagName:tag, subId:0, subName:sub,  //分类和子分类id/名称
+      tagId:tag, tagName:tagName, subId:sub, subName:subName,  //分类和子分类id/名称
       sortId:0, sortName:'智能排序',  //排序方式
-      storeList:[], pageIndex:1
+      storeList:[]
     }
     this.isLoaded=false
   }
   componentWillMount(){
+    let _this = this;
     this.props.setStoreList({
+      type:'SET_STORE_LIST_POSITION',
       area:'福田区',
       city:'深圳市'
+    }).then(()=>{
+      let {index,level,location,sortby} = _this.props.storeList
+      return _this.props.setStoreList({
+        type:'SET_STORE_LIST',
+        location:location,
+        index:index,
+        tags:_this.state.tagName,
+        sub:_this.state.subName,
+        level:level,
+        sortby:sortby,
+      })
+    }).then((r)=>{
+      _this.setState({
+        storeList:_this.props.storeList.list
+      })
     })
   }
   render() {
@@ -63,10 +83,11 @@ class AppComponent extends React.Component {
         </span><i></i></li>
       </ul>
       <div className={style['store-box']}>
-        <ReactIScroll iScroll={iScroll} className="example"
-                      handleRefresh={this.handleRefresh.bind(this)}>
+        <ReactIScroll ref="ReactIScroll" iScroll={iScroll} className="example"
+                      handleRefresh={this.handleRefresh.bind(this)}
+                      pullUp={false}>
           <section>
-            <StoreItem/>
+            {this.state.storeList.map((item,k)=>(<StoreItem item={item} key={k} />))}
           </section>
         </ReactIScroll>
       </div>
@@ -83,7 +104,19 @@ class AppComponent extends React.Component {
       </div>
     </div>);
   }
+  componentDidMount(){
+    let _this = this;
+    setTimeout(()=>{
+      console.log(_this.refs.ReactIScroll.getIScroll().refresh())
+      setTimeout(()=>{
+        console.log(_this.refs.ReactIScroll)
+      },200)
+    },1000)
+  }
+  componentDidUpdate(){
+   // console.log(this.refs.ReactIScroll.refresh())
 
+  }
   getDate(){
 
   }

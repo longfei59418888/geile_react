@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Scroller  from '../lib/Scroller'
+// import Scroller  from '../lib/Scroller'
 
 import iScroll from 'iscroll/build/iscroll-probe';
-import ReactIScroll from 'reactjs-iscroll';
+// import ReactIScroll from 'reactjs-iscroll';
 
 
 
@@ -32,19 +32,23 @@ class AppComponent extends React.Component {
   }
   render() {
     return (<div style={{backgroundColor:'#F4F4F4',height:'100%'}}>
-      <Head></Head>
-      <div style={{position:'absolute',width:'100%',top:'2.9rem',bottom:'.9rem'}}>
-        <ReactIScroll iScroll={iScroll} className="example"
-                      pullUp={this.state.ReactIScrollOption.pullUp}
-                      handleRefresh={this.handleRefresh.bind(this)}>
-          <Nav/>
-          <Slide/>
-          <Info/>
-        </ReactIScroll>
-      </div>
-      <Bottom/>
     </div>);
   }
+  // render() {
+  //   return (<div style={{backgroundColor:'#F4F4F4',height:'100%'}}>
+  //     <Head></Head>
+  //     <div style={{position:'absolute',width:'100%',top:'2.9rem',bottom:'.9rem'}}>
+  //       <ReactIScroll iScroll={iScroll} className="example"
+  //                     pullUp={this.state.ReactIScrollOption.pullUp}
+  //                     handleRefresh={this.handleRefresh.bind(this)}>
+  //         <Nav/>
+  //         <Slide/>
+  //         <Info/>
+  //       </ReactIScroll>
+  //     </div>
+  //     <Bottom/>
+  //   </div>);
+  // }
   handleRefresh(downOrUp, callback){
     callback()
     return

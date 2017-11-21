@@ -3,6 +3,7 @@
  */
 import { combineReducers } from 'redux'
 import test from './testReducer'
+import storeReducer from './storeReducer'
 
 //滑动方向
 function setSlideDirection(state={slideDirection:''},action) {
@@ -31,4 +32,4 @@ function globalStyleInfo(state={
 }
 
 
-export default  combineReducers(Object.assign({setSlideDirection,globalStyleInfo},test))
+export default  combineReducers(Object.assign({setSlideDirection,globalStyleInfo},storeReducer))

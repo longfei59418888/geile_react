@@ -44,7 +44,7 @@
   .box{top: 1.72rem;position: relative}
 }
 .store-box{position: absolute;top: 1.72rem;bottom: 0;width: 100vw;height: 100vh; z-index: 9 }
-.store-item{display: flex;padding: .4rem 0;margin: 0 .25rem;border-bottom: 1px solid #EEEEEE;position: relative;
+.store-item{display: flex;padding: .4rem 0;margin: 0 .25rem;border-bottom: 1px solid #EEEEEE;position: relative;height: 2.8rem;
   >aside{width: 2rem;height: 2rem;position: relative;border-radius: .2rem;border: 1px solid #BDC4C9;overflow: hidden;
   img{height: 100%;width: auto;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);max-width: none}}
   >div{  flex: 1;padding-left: .35rem;text-align: left;color: #6F7B85;

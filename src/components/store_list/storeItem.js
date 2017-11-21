@@ -5,12 +5,13 @@ import Star from './star'
 
 class AppComponent extends React.Component {
     render() {
+      let {images,tags,title,saleRate,shortName,paymentCount,perCapita,categoryName,areaName,distance,commentGrade} = this.props.item;
         return (<div className={style['store-item']}>
-          <aside><img src="https://gl365dev.oss-cn-shenzhen.aliyuncs.com/merchant/gl_24_agent/head1503988207.jpg" alt=""/></aside>
+          <aside><img src={images} alt=""/></aside>
           <div>
-            <header>完鼎科技只能有限公司</header>
-            <aside><Star score={4}/><p>5分  0人已消费 </p></aside>
-            <p>桃源·自动售卖机 <span>1.3km</span></p>
+            <header>{shortName}</header>
+            <aside><Star score={commentGrade}/><p>{commentGrade}分  {paymentCount}人已消费 </p></aside>
+            <p>{areaName.length>4?areaName.slice(4):areaName}·{categoryName} <span>{distance>999?(distance/1000).toFixed(2)+'k':distance}m</span></p>
           </div>
           <p><span>10%</span></p>
         </div>);
