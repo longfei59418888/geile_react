@@ -1,5 +1,9 @@
 import React from 'react';
+import {hashHistory} from 'react-router'
 class AppComponent extends React.Component {
+  constructor(props){
+    super(props)
+  }
     render() {
       let {left,right,name} = this.props
       if(left=='back'){
@@ -13,7 +17,7 @@ class AppComponent extends React.Component {
     }
     back(){
       if(this.props.left == 'back'){
-        console.log(this)
+        hashHistory.back()
       }
     }
 }

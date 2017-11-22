@@ -3,8 +3,8 @@
  */
 window.GLOBAL_CONFIG =  {
   baiduAk: {
-    ak: 'HIF9z3sj78rvtXQVtKl3S1oQ9dU2ZgyD',
-    id: '170475'
+    ak: '5c386b41caecdd8f9003871d2660ef2d',
+    id: '172778'
   },
 }
 

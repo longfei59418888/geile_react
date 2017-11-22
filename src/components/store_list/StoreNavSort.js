@@ -27,7 +27,7 @@ class AppComponent extends React.Component {
     return (<div className={style['city-list']}>
       <aside style={{width:'100%'}}>
         {list.map((item,i)=>(
-          <p className={index == item.id?style.active:''} onClick={this.choose.bind(this,item.id,item.name)}><i></i><span>{item.name}</span></p>
+          <p key={i} className={index == item.id?style.active:''} onClick={this.choose.bind(this,item.id,item.name)}><i></i><span>{item.name}</span></p>
         ))}
       </aside>
     </div>)

@@ -37,7 +37,7 @@ export function setStoreList(query) {
       break;
     case 'SET_STORE_LIST':
       return (dispatch)=>{
-        let radius = query.level=='城市'?40000:15000;
+        let radius = query.level=='城市'?40000:15000,isEnd=false
         let promise = new Promise((reject,resolve)=>{
           window.ajaxJsonp({
             url: 'https://api.map.baidu.com/geosearch/v3/nearby',
@@ -54,6 +54,7 @@ export function setStoreList(query) {
               ak:GLOBAL_CONFIG.baiduAk.ak,
               geotable_id:GLOBAL_CONFIG.baiduAk.id},
               success:function(res){
+              if(res.contents.length<1) isEnd=true
               dispatch({
                 type:SET_STORE_LIST,
                 data:{
@@ -61,6 +62,7 @@ export function setStoreList(query) {
                   sortby:query.sortby,
                   sub:query.sub,
                   tags:query.tags,
+                  isEnd:isEnd,
                   list:res.contents
                 }
               })

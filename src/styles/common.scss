@@ -27,7 +27,7 @@
 }
 /*路由切换动画——右移动*/
 .right-enter {
-  transform: translateX(-100%);
+  transform: translateX(-100%); z-index: 99999;
 }
 .right-enter.right-enter-active {
   transform: translateX(0);
@@ -41,6 +41,18 @@
   opacity: 1;
   transform: translateX(0);
 }
+.right-leave.right-enter-active {
+  transform: translateX(-50%);
+  transition: all 0.4s ease-out;
+}
+
+
+.opacity-enter {  opacity: 1; z-index: 99999 }
+.opacity-enter.opacity-enter-active {  opacity: 1;  transition: opacity 0.1s;  }
+.opacity-leave {  opacity: 0;display: none!important; }
+.opacity-leave.opacity-enter-active {  opacity: 0; display: none!important;   transition: opacity 0.1s;}
+
+
 
 //store_nav
 .show_store-enter { position: absolute;  top: 0;   z-index: 10000;  opacity: 1;  transform: translateY(-100%);  }
@@ -50,9 +62,8 @@
 
 
 //去掉滚动条
-::-webkit-scrollbar {
-  display: none;
-}
+::-webkit-scrollbar {  display: none;  }
+a,button,input,textarea,*{-webkit-tap-highlight-color: rgba(0,0,0,0)}
 
 
 p{line-height: 1;margin: 0;padding: 0;}
@@ -86,6 +97,10 @@ img{width: 100%;max-width: 100%;}
   .c_left,.c_right{width: 1rem;display: flex;justify-content: center;align-items: center;height: .88rem;}
   .c_content{flex: 1;justify-content: center;align-items: center;height: .88rem;display: flex}
   .back{i{@include setBackground('../images/icon/back-satreo.png',.48rem,.48rem);}}
+}
+.comment_scroll_box{
+  -webkit-transition: top .6s ;
+  transition: top .6s ;
 }
 
 //字体

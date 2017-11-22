@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import style from './index.module.scss'
 import Star from './star'
+import { ellipsis, distanceFormat } from '../libs/utils'
 
 class AppComponent extends React.Component {
     render() {
@@ -11,7 +12,7 @@ class AppComponent extends React.Component {
           <div>
             <header>{shortName}</header>
             <aside><Star score={commentGrade}/><p>{commentGrade}分  {paymentCount}人已消费 </p></aside>
-            <p>{areaName.length>4?areaName.slice(4):areaName}·{categoryName} <span>{distance>999?(distance/1000).toFixed(2)+'k':distance}m</span></p>
+            <p>{ellipsis(areaName,4)}·{categoryName} <span>{distanceFormat(distance)}</span></p>
           </div>
           <p><span>10%</span></p>
         </div>);

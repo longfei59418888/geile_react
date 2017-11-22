@@ -12,8 +12,8 @@ class AppComponent extends React.Component {
         <CSSTransitionGroup
           transitionName={this.props.setSlideDirection.slideDirection}
           component="div"
-          transitionEnterTimeout={this.props.setSlideDirection.time?10:500}
-          transitionLeaveTimeout={this.props.setSlideDirection.time?10:300}>
+          transitionEnterTimeout={this.props.setSlideDirection.time?1:500}
+          transitionLeaveTimeout={this.props.setSlideDirection.time?1:300}>
           <div key={this.props.location.pathname}
                style={{position:"absolute", width: "100%",height:'100%',backgroundColor:'#fff'}}>
             {this.props.children}

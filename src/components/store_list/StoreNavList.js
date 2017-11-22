@@ -12,6 +12,7 @@ class AppComponent extends React.Component {
       super(props)
       this.state={
         index:this.props.index,
+        indexName:this.props.indexName,
         subIndex:this.props.subIndex?this.props.subIndex:0,
         subList:!this.props.index?[]:industryFormate[this.props.index],
       }
@@ -26,7 +27,7 @@ class AppComponent extends React.Component {
         </aside>
         <ul>
           <p className={this.state.subIndex == 0?style.active:''}
-             onClick={this.setInst.bind(this,0)}><i></i><span>全部</span></p>
+             onClick={this.setInst.bind(this,0,'全部')}><i></i><span>全部</span></p>
           {this.state.subList.map((item,i)=>(<p key={i} className={this.state.subIndex == item.id?style.active:''}
                                                 onClick={this.setInst.bind(this,item.id,item.name)}><i></i><span>{item.name}</span></p>))}
         </ul>
@@ -46,6 +47,7 @@ class AppComponent extends React.Component {
       })
   }
   setInst(index,name,e){
+    console.log(this.state.index,this.state.indexName,index,name)
     this.props.setTagSub(this.state.index,this.state.indexName,index,name)
   }
 }

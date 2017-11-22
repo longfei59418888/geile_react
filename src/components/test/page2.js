@@ -3,31 +3,30 @@ import appStyle from '../app.module.css';
 import { connect } from 'react-redux';
 import Scroller from '../../lib/Scroller'
 class AppComponent extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={
+      list:[1,23,45,3442,342,3,4]
+    }
+  }
   render() {
     return (
       <div  className={appStyle.box}  style={{backgroundColor:'#ccc'}}>
         <Scroller>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'20px'}}>asdfas</div>
-            <div style={{lineHeight:'50px'}}>asdfas</div>
-            <div style={{lineHeight:'50px'}}>asdf</div>
-            <div style={{lineHeight:'50px'}}>asdfas</div>
-            <div style={{lineHeight:'50px'}}>asdasdfasdffas</div>
-            <div style={{lineHeight:'50px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdffasdfasas</div>
-            <div style={{lineHeight:'20px'}}>asdfas</div>
-            <div style={{lineHeight:'20px'}}>asdfasdf</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>sdfdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfas</div>
-            <div style={{lineHeight:'40px'}}>asdfasd</div>
+           <div>
+             {this.state.list.map((item,i)=>( <div key={i} style={{lineHeight:'40px'}}>asdfas{item}</div>))}
+           </div>
         </Scroller>
       </div>
     );
+  }
+  onRefresh(scroll,bak,e){
+
+    var _this = this;
+    setTimeout(()=>{
+      _this.setState({list:this.state.list.concat([12,234,2,34,23,42,34,23,42,342,3,4,42,34,'end'])})
+      bak(true)
+    },2000)
   }
   goBack(){
     this.props.router.back()

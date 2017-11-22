@@ -13,9 +13,9 @@ function setSlideDirection(state={slideDirection:''},action) {
     case 'RIGHT_BACK':
       return Object.assign({},state,{slideDirection:'right',time:false})
     case 'NO_FORWARD_BACK':
-      return Object.assign({},state,{slideDirection:'',time:true})
+      return Object.assign({},state,{slideDirection:'opacity',time:true})
     default :
-      return Object.assign({},state,{slideDirection:''})
+      return Object.assign({},state,{slideDirection:'opacity',time:true})
   }
 }
 

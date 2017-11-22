@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as actions  from '../../reducers/actions/store'
-import iScroll from 'iscroll/build/iscroll-probe';
-import ReactIScroll from 'reactjs-iscroll';
+// import iScroll from 'iscroll/build/iscroll-probe';
+import Scroller from '../../lib/Scroller';
 import { CSSTransitionGroup } from 'react-transition-group' // ES6
 import industry from '../../config/industry.json'
 import style from './index.module.scss'
@@ -34,36 +34,18 @@ class AppComponent extends React.Component {
       index:0, nav:[], showNav: false, //下拉选择
       cityId:77, districtId:0, districtName:0,  //城市和地区ID
       tagId:tag, tagName:tagName, subId:sub, subName:subName,  //分类和子分类id/名称
-      sortId:0, sortName:'智能排序',  //排序方式
+      sortId:0,sortby:'', sortName:'智能排序',  //排序方式
       storeList:[]
     }
     this.isLoaded=false
+    this.doRefresh=true
   }
   componentWillMount(){
-    let _this = this;
-    this.props.setStoreList({
-      type:'SET_STORE_LIST_POSITION',
-      area:'福田区',
-      city:'深圳市'
-    }).then(()=>{
-      let {index,level,location,sortby} = _this.props.storeList
-      return _this.props.setStoreList({
-        type:'SET_STORE_LIST',
-        location:location,
-        index:index,
-        tags:_this.state.tagName,
-        sub:_this.state.subName,
-        level:level,
-        sortby:sortby,
-      })
-    }).then((r)=>{
-      _this.setState({
-        storeList:_this.props.storeList.list
-      })
-    })
+    this.setPostionDate('福田区')
   }
   render() {
     const NavList = this.state.nav.map((item,i)=> (<div key={i}>{item}</div>))
+    const List = this.state.storeList.map((item,k)=>(<div key={k}><StoreItem item={item} /></div>))
     return (<div>
       <CHead left='back'
             right={(<div onClick={this.goMessage} className="flex-mixin-center" style={{height:'100%',left:'100%'}}>
@@ -83,13 +65,12 @@ class AppComponent extends React.Component {
         </span><i></i></li>
       </ul>
       <div className={style['store-box']}>
-        <ReactIScroll ref="ReactIScroll" iScroll={iScroll} className="example"
-                      handleRefresh={this.handleRefresh.bind(this)}
-                      pullUp={false}>
+        <Scroller ref="scroller" onRefresh={this.onRefresh.bind(this)}
+                  onLoadMore={this.onLoadMore.bind(this)}>
           <section>
-            {this.state.storeList.map((item,k)=>(<StoreItem item={item} key={k} />))}
+            {List}
           </section>
-        </ReactIScroll>
+        </Scroller>
       </div>
       <div className={style.bg} style={{display:this.state.showNav?'block':'none'}}>
         <div className={style.box}>
@@ -104,21 +85,81 @@ class AppComponent extends React.Component {
       </div>
     </div>);
   }
-  componentDidMount(){
+  componentDidUpdate(){}
+  setPostionDate(district){
     let _this = this;
+    this.props.setStoreList({
+      type:'SET_STORE_LIST_POSITION',
+      area:district,
+      city:'深圳市'
+    }).then(()=>{
+      let {index,level,location,sortby} = _this.props.storeList
+      return _this.props.setStoreList({
+        type:'SET_STORE_LIST',
+        location:location,
+        index:0,
+        tags:_this.state.tagName,
+        sub:_this.state.subName,
+        level:level,
+        sortby:sortby,
+      })
+    }).then((r)=>{
+      _this.setState({
+        storeList:_this.props.storeList.list
+      })
+    })
+  }
+  setList(bak){
+    var _this = this;
+    let {isEnd,list} = _this.props.storeList;
+    bak(isEnd)
+    _this.setState({
+      storeList:list
+    })
+  }
+  refreshDate(bak){
+    let _this = this
+    let {location , level } =_this.props.storeList
     setTimeout(()=>{
-      console.log(_this.refs.ReactIScroll.getIScroll().refresh())
-      setTimeout(()=>{
-        console.log(_this.refs.ReactIScroll)
-      },200)
-    },1000)
+      _this.props.setStoreList({
+        type:'SET_STORE_LIST',
+        //位置
+        location:location,
+        level:level,
+        index:0,
+        tags:_this.state.tagName,
+        sub:_this.state.subName,
+        sortby:_this.state.sortby,
+      }).then(()=>{
+        _this.setList(bak)
+      })
+    },50)
   }
-  componentDidUpdate(){
-   // console.log(this.refs.ReactIScroll.refresh())
-
+  onRefresh(scroll,bak,e){
+    var _this = this;
+    _this.refreshDate(function (type) {
+      bak(type)
+    })
   }
-  getDate(){
-
+  onLoadMore(scroll,bak,e){
+    let _this = this
+    let {location , level,index } =_this.props.storeList
+    setTimeout(()=>{
+      _this.props.setStoreList({
+        type:'SET_STORE_LIST',
+        //位置
+        location:location,
+        level:level,
+        index:index,
+        tags:_this.state.tagName,
+        sub:_this.state.subName,
+        sortby:_this.state.sortby,
+      }).then(()=>{
+        _this.setList((type)=>{
+          bak(type)
+        })
+      })
+    },50)
   }
   showNavList(index,e){
       let nav = []
@@ -130,6 +171,7 @@ class AppComponent extends React.Component {
       switch (index){
         case 1:nav = [(<StoreNavList setTagSub={this.setTagSub.bind(this)}
                                      index={this.state.tagId}
+                                     indexName={this.state.tagName}
                                      subIndex={this.state.subId}></StoreNavList>)];break;
         case 2:nav = [(<StoreNavDis city={this.state.cityId}
                                     choseCity={this.choseCity.bind(this)}
@@ -144,20 +186,37 @@ class AppComponent extends React.Component {
     this.setState({nav:[],index:0,showNav:false})
   }
   //选择分类
-  setTagSub(tag,tagName,sub,subName,e){
-    this.setState({nav:[],index:0,tagId:tag,tagName:tagName,subId:sub,subName:subName})
+  setTagSub(tag,tagName,sub,subName){
+    var _this = this,newState = {nav:[],index:0,showNav:false}
+    if(tag) Object.assign(newState,{tagId:tag,tagName:tagName,})
+    this.setState(Object.assign(newState,{subId:sub?sub:'',subName:sub?subName:''}))
+    this.refreshDate((type)=>{
+      if(type) _this.refs.scroller.setEnd()
+    })
   }
   //选择城市
   choseCity(id,name,e){
-    this.setState({nav:[],index:0,districtId:id,districtName:name})
+    let _this = this;
+    this.setState({nav:[],index:0,districtId:id,districtName:name,showNav:false})
+    if(!id) return
+    setTimeout(function () {
+      _this.setPostionDate(_this.state.districtName)
+    },50)
   }
   //排序
   chooseSort(id,name,e){
-    this.setState({nav:[],index:0,sortId:id})
-  }
-  handleRefresh(){}
-  goMessage(){
-    alert('message')
+    let sortby = '',_this= this;
+    switch (id){
+      case 1: sortby='saleRate:-1';break;
+      case 2: sortby='distance:1';break;
+      case 3: sortby='paymentCount:-1';break;
+    }
+    this.setState({nav:[],index:0,sortId:id,sortby:sortby,showNav:false,sortName:name})
+    setTimeout(function () {
+      _this.refreshDate((type)=>{
+        if(type) _this.refs.scroller.setEnd()
+      })
+    },50)
   }
 }
 
