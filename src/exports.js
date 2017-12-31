@@ -37,6 +37,43 @@ class App extends Component {
     );
   }
 }
+
+class About extends Component{
+    previousLocation = this.props.location
+    componentWillUpdate(nextProps){
+        const { location,history } = this.props
+        if (history.action !== 'POP' && (!location.state || !location.state.modal)) {
+            this.previousLocation = this.props.location
+        }
+    }
+    render(){
+        const { match,location } = this.props
+        const isModal = !!(
+            location.state &&
+            location.state.modal &&
+            this.previousLocation !== location // not initial render
+        )
+        return (
+            <div className="slide-box" style={{transform:isModal?'translateX(-100%)':'translateX(0)'}}>
+                <Switch location={isModal ? this.previousLocation : location}>
+                    <Route  exact path={`${match.url}/1`} render={()=>(<Link
+                        to={{pathname:`${match.url}/modal`,
+                        state: { modal: true }}
+                    }>1</Link>)}></Route>
+                    <Route  exact path={`${match.url}/2`} render={()=>(<h1>2</h1>)}></Route>
+                </Switch>
+                <div className="slide-box-left">
+                   <Route render={()=>(
+                        <div >img</div>
+                    )} />
+                </div>
+            </div>
+        )
+    }
+}
+
+
+
 export default App;
 // .box{position: absolute;width: 100%;height: 100%;text-align: center;overflow: hidden;}
 // /*路由切换动画——左移动*/
