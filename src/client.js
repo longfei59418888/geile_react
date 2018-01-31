@@ -9,6 +9,9 @@ import global_config from './config'
 require('./styles/common.scss')
 
 console.log(browserHistory)
+//NO_FORWARD_BACK   无动画
+//LEFT_FORWARD   前进动画
+//RIGHT_BACK   返回动画
 
 
 //  页面切换
@@ -61,7 +64,6 @@ ReactDOM.render(
   <AppContainer>
     <Provider store={initStore}>
       <Router onUpdate={(n,s,t)=>{
-       alert()
       }} history={hashHistory} >
         <Route path="/" component={App}>
           <Route path="store_list/:tag/:sub" component={StoreList} />

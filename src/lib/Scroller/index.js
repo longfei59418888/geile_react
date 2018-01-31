@@ -12,12 +12,12 @@ class AppComponent extends React.Component {
     };
     this.onRefresh  = this.props.onRefresh?this.props.onRefresh:false
     this.onLoadMore  = this.props.onLoadMore?this.props.onLoadMore:false
-    this.canRefresh = false;
-    this.isRefreshIng = false;
-    this.canLoadMore = false;
-    this.loadMoreIng  = false;
-    this.loadEnd = false
-    this.doRefresh=false
+    this.canRefresh = false; //是否可以再次刷新
+    this.isRefreshIng = false; //是否在刷新中
+    this.canLoadMore = false; // 是否可以再次加载
+    this.loadMoreIng  = false; // 是否在加载中
+    this.loadEnd = false  // 是否加载完毕
+    this.doRefresh=false //
   }
     render() {
       return (
@@ -36,8 +36,11 @@ class AppComponent extends React.Component {
      _this.refs['box'].style['min-height']=(_this.refs['boxScroll'].offsetHeight+1)+'px'
     _this.iScrollInstance = new iScroll(ReactDOM.findDOMNode(_this),{
       probeType: 3, mouseWheel: true,hasRefresh:_this.onRefresh,preventDefault:false });
+     //滚动结束
     _this.iScrollInstance.on('scrollStartEnd', ()=>{
+      //正在加载或者刷新时候直接返回
       if(this.isRefreshIng || this.loadMoreIng) return;
+      //是否可以刷新
       if(_this.canRefresh){
         _this.refs.refresh.innerHTML='正在刷新...'
         _this.isRefreshIng = true;
@@ -47,6 +50,7 @@ class AppComponent extends React.Component {
           })
         },100)
       }
+      //加载更多
       if(_this.canLoadMore && !_this.loadEnd){
         _this.loadMoreIng  = true;
         setTimeout(()=>{
@@ -56,23 +60,28 @@ class AppComponent extends React.Component {
         },100)
       }
     });
+    //滚动中
     _this.iScrollInstance.on('scroll',()=>{
+      //正在加载或刷新直接返回
       if(this.isRefreshIng || this.loadMoreIng) return;
+      //刷新
       if(_this.onRefresh){
         if(_this.iScrollInstance.y>60 && !_this.canRefresh ){
           if(!_this.canRefresh) _this.refs.refresh.innerHTML = '松手刷新...'
-          _this.canRefresh = true
+          _this.canRefresh = true  //可以刷新
         }
         if( _this.iScrollInstance.y<59 && _this.canRefresh) {
           if(_this.canRefresh) _this.refs.refresh.innerHTML = '下拉刷新...'
-          _this.canRefresh = false
+          _this.canRefresh = false //不刷新
         }
       }
+      //加载更多
       if(_this.onLoadMore && !_this.loadEnd){
-        if(_this.iScrollInstance.y<_this.iScrollInstance.maxScrollY+80 && !_this.canLoadMore) _this.canLoadMore = true;
-        if(_this.iScrollInstance.y>_this.iScrollInstance.maxScrollY+80 && _this.canLoadMore) _this.canLoadMore = false;
+        if(_this.iScrollInstance.y<_this.iScrollInstance.maxScrollY+80 && !_this.canLoadMore) _this.canLoadMore = true; //可以加载
+        if(_this.iScrollInstance.y>_this.iScrollInstance.maxScrollY+80 && _this.canLoadMore) _this.canLoadMore = false; //不加载
       }
     });
+    //当前小于整页
     if(_this.iScrollInstance.maxScrollY==-1){
       setTimeout(function () {
         _this.init()
@@ -80,6 +89,7 @@ class AppComponent extends React.Component {
     }
   }
   shouldComponentUpdate(np,ns){
+    //组件改变刷新
     if(np.children != this.props.children) this.doRefresh = true
     return true
   }
@@ -103,6 +113,7 @@ class AppComponent extends React.Component {
     _this.loadEnd = true
   }
   refresh(){
+    //刷新iscroll
     var _this = this;
     setTimeout(()=>{
       _this.iScrollInstance.refresh()
