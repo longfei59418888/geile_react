@@ -43,7 +43,10 @@ class AppComponent extends React.Component {
       hasRefresh:_this.onRefresh,
       preventDefault:false
     });
+<<<<<<< HEAD
      //滚动结束
+=======
+>>>>>>> 0e34c9cabbf5a4790914deb3a2f7c265ce7a4f0d
     _this.iScrollInstance.on('scrollStartEnd', ()=>{
       //正在加载或者刷新时候直接返回
       if(this.isRefreshIng || this.loadMoreIng) return;
