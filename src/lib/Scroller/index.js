@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import style from './style.module.scss'
-import iScroll from 'iscroll/build/iscroll-probe';
+import iScroll from 'iscroll/build/iscroll-probe.js';
 
 class AppComponent extends React.Component {
   constructor(props, context) {
@@ -35,7 +35,14 @@ class AppComponent extends React.Component {
     var _this = this;
      _this.refs['box'].style['min-height']=(_this.refs['boxScroll'].offsetHeight+1)+'px'
     _this.iScrollInstance = new iScroll(ReactDOM.findDOMNode(_this),{
-      probeType: 3, mouseWheel: true,hasRefresh:_this.onRefresh,preventDefault:false });
+      probeType: 3,
+      mouseWheel: true,
+      disablePointer: true,
+      disableTouch:false,
+      disableMouse:false,
+      hasRefresh:_this.onRefresh,
+      preventDefault:false
+    });
      //滚动结束
     _this.iScrollInstance.on('scrollStartEnd', ()=>{
       //正在加载或者刷新时候直接返回
@@ -98,6 +105,7 @@ class AppComponent extends React.Component {
     this.doRefresh = false
 
   }
+  //加载更多完成
   loadMoreEnd(type){
     var _this = this;
     _this.canLoadMore=false
@@ -107,18 +115,21 @@ class AppComponent extends React.Component {
       _this.loadMoreIng = false;
     },100)
   }
+  //加载完毕
   setEnd(){
     var _this = this;
     _this.refs.loadMore.innerHTML='加载完毕...'
     _this.loadEnd = true
   }
+  //刷新iscroll
   refresh(){
-    //刷新iscroll
+    //
     var _this = this;
     setTimeout(()=>{
       _this.iScrollInstance.refresh()
     },100)
   }
+  //下拉刷新结束函数
   refreshEnd(type){  //type true:加载完毕
     var _this = this;
     _this.refs.refresh.innerHTML='下拉刷新...'
