@@ -35,7 +35,14 @@ class AppComponent extends React.Component {
     var _this = this;
      _this.refs['box'].style['min-height']=(_this.refs['boxScroll'].offsetHeight+1)+'px'
     _this.iScrollInstance = new iScroll(ReactDOM.findDOMNode(_this),{
-      probeType: 3, mouseWheel: true,hasRefresh:_this.onRefresh,preventDefault:false });
+      probeType: 3,
+      mouseWheel: true,
+      disablePointer: true,
+      disableTouch:false,
+      disableMouse:false,
+      hasRefresh:_this.onRefresh,
+      preventDefault:false
+    });
     _this.iScrollInstance.on('scrollStartEnd', ()=>{
       if(this.isRefreshIng || this.loadMoreIng) return;
       if(_this.canRefresh){
