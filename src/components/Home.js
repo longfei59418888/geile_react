@@ -35,7 +35,7 @@ class AppComponent extends React.Component {
     return (<div style={{backgroundColor:'#F4F4F4',height:'100%'}}>
       <Head></Head>
       <div style={{position:'absolute',width:'100%',top:'2.9rem',bottom:'.9rem'}}>
-        <Scroller >
+        <Scroller onRefresh={()=>{alert('test');}}>
           <Nav/>
           <Slide/>
           <Info/>

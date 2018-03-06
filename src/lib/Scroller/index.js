@@ -20,13 +20,14 @@ class AppComponent extends React.Component {
     this.doRefresh=false //
   }
     render() {
-      return (
-        <div ref='boxScroll' style={{position:'absolute',top:this.onRefresh?-60:0,width:'100%',overflow:'hidden',bottom:0,}}>
-          <div ref='box'>
-            <div ref='refresh' style={{height:60,display:this.onRefresh?'flex':'none',alignItems:'center', justifyContent:'center'}}>下拉刷新...</div>
-            {this.props.children}
-            <div ref='loadMore' style={{height:60,display:this.onLoadMore?'flex':'none',alignItems:'center', justifyContent:'center'}}>
-              正在加载...</div>
+      return (<div style={{height:'100%',width:'100%',overflow:'hidden',position:'absolute'}}>
+          <div ref='boxScroll' style={{position:'absolute',top:this.onRefresh?-60:0,width:'100%',overflow:'hidden',bottom:0,}}>
+            <div ref='box'>
+              <div ref='refresh' style={{height:60,display:this.onRefresh?'flex':'none',alignItems:'center', justifyContent:'center'}}>下拉刷新...</div>
+              {this.props.children}
+              <div ref='loadMore' style={{height:60,display:this.onLoadMore?'flex':'none',alignItems:'center', justifyContent:'center'}}>
+                正在加载...</div>
+            </div>
           </div>
         </div>
       );
@@ -34,7 +35,7 @@ class AppComponent extends React.Component {
   componentDidMount() {
     var _this = this;
      _this.refs['box'].style['min-height']=(_this.refs['boxScroll'].offsetHeight+1)+'px'
-    _this.iScrollInstance = new iScroll(ReactDOM.findDOMNode(_this),{
+    _this.iScrollInstance = new iScroll(_this.refs['boxScroll'],{
       probeType: 3,
       mouseWheel: true,
       disablePointer: true,
@@ -43,10 +44,7 @@ class AppComponent extends React.Component {
       hasRefresh:_this.onRefresh,
       preventDefault:false
     });
-<<<<<<< HEAD
      //滚动结束
-=======
->>>>>>> 0e34c9cabbf5a4790914deb3a2f7c265ce7a4f0d
     _this.iScrollInstance.on('scrollStartEnd', ()=>{
       //正在加载或者刷新时候直接返回
       if(this.isRefreshIng || this.loadMoreIng) return;
