@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import style from './style.module.scss'
-import iScroll from 'iscroll/build/iscroll-probe.js';
+import iScroll from '../iscroll-probe.js';  //该文件被修改
+
 
 class AppComponent extends React.Component {
   constructor(props, context) {
@@ -90,10 +91,14 @@ class AppComponent extends React.Component {
       }
     });
     //当前小于整页
-    if(_this.iScrollInstance.maxScrollY==-1){
-      setTimeout(function () {
-        _this.init()
-      },100)
+    if(_this.props.init && (_this.props.init.x+_this.props.init.y) !=0){
+      _this.iScrollInstance.scrollTo(_this.props.init.x,_this.props.init.y,0)
+    }else {
+      if(_this.iScrollInstance.maxScrollY==-1){
+        setTimeout(function () {
+          _this.init()
+        },100)
+      }
     }
   }
   shouldComponentUpdate(np,ns){
@@ -105,6 +110,10 @@ class AppComponent extends React.Component {
     if(this.doRefresh) this.refresh()
     this.doRefresh = false
 
+  }
+  componentWillUnmount(){
+    if(this.iScrollInstance.maxScrollY==-1) return
+    if(this.props.leaveBefor) this.props.leaveBefor(this.iScrollInstance)
   }
   //加载更多完成
   loadMoreEnd(type){

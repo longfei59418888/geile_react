@@ -12,7 +12,7 @@ console.log(browserHistory)
 //NO_FORWARD_BACK   无动画
 //LEFT_FORWARD   前进动画
 //RIGHT_BACK   返回动画
-
+console.log(hashHistory)
 
 //  页面切换
 hashHistory.SLIDE_ING = false
@@ -29,6 +29,12 @@ function setSlideStatus(action,bak) {
 hashHistory.goTo = function(count) {
   setSlideStatus('LEFT_FORWARD',function () {
     hashHistory.go(count)
+  })
+};
+let pushHistory = hashHistory.push
+hashHistory.push = function(location) {
+  setSlideStatus('LEFT_FORWARD',function () {
+    pushHistory(location)
   })
 };
 hashHistory.goReplace = function(location) {
@@ -55,7 +61,7 @@ hashHistory.listenBefore(function () {
 })
 //默认无动效，Alink组件实现左滑，back实现右滑动
 console.log(Router)
-
+React.dispatch = initStore.dispatch
 import App from './components/App';
 import Home from './components/Home';
 import StoreList from './components/store_list'

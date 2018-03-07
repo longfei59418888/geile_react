@@ -13,7 +13,7 @@ import StoreNavList from './StoreNavList'
 import StoreNavDis from './StoreNavDis'
 import StoreNavSort from './StoreNavSort'
 import StoreItem from './storeItem'
-
+import { hashHistory } from 'react-router';
 
 class AppComponent extends React.Component {
   constructor(props){
@@ -41,11 +41,15 @@ class AppComponent extends React.Component {
     this.doRefresh=true
   }
   componentWillMount(){
-    this.setPostionDate('福田区')
+    if(this.props.storeList.list.length<1) this.setPostionDate('福田区')
+    else this.setState({storeList:this.props.storeList.list})
   }
   render() {
     const NavList = this.state.nav.map((item,i)=> (<div key={i}>{item}</div>))
-    const List = this.state.storeList.map((item,k)=>(<div key={k}><StoreItem item={item} /></div>))
+    const List = this.state.storeList.map((item,k)=>(<div onClick={()=>{
+      hashHistory.push('/page2')
+    }} key={k}><StoreItem item={item} /></div>))
+    console.log(React)
     return (<div>
       <CHead left='back'
             right={(<div onClick={this.goMessage} className="flex-mixin-center" style={{height:'100%',left:'100%'}}>
@@ -65,7 +69,10 @@ class AppComponent extends React.Component {
         </span><i></i></li>
       </ul>
       <div className={style['store-box']}>
-        <Scroller ref="scroller" onRefresh={this.onRefresh.bind(this)}
+        <Scroller ref="scroller" init={{x:0,y:this.props.storeList.y}} leaveBefor={(scroller)=>{
+          console.log(scroller)
+          React.dispatch({type:'SET_STORE_LIST_COMMON',data:{y:scroller.y}})
+        }} onRefresh={this.onRefresh.bind(this)}
                   onLoadMore={this.onLoadMore.bind(this)}>
           <section>
             {List}

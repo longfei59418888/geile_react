@@ -2,6 +2,7 @@ import React from 'react';
 import appStyle from '../app.module.css';
 import { connect } from 'react-redux';
 import Scroller from '../../lib/Scroller'
+import { hashHistory } from 'react-router';
 class AppComponent extends React.Component {
   constructor(props){
     super(props)
@@ -14,7 +15,9 @@ class AppComponent extends React.Component {
       <div  className={appStyle.box}  style={{backgroundColor:'#ccc'}}>
         <Scroller>
            <div>
-             {this.state.list.map((item,i)=>( <div key={i} style={{lineHeight:'40px'}}>asdfas{item}</div>))}
+             {this.state.list.map((item,i)=>( <div onClick={()=>{
+               hashHistory.back()
+             }} key={i} style={{lineHeight:'40px'}}>asdfas{item}</div>))}
            </div>
         </Scroller>
       </div>
