@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as actions  from '../../reducers/actions/store'
 // import iScroll from 'iscroll/build/iscroll-probe';
-import Scroller from '../../lib/Scroller';
+import Scroller from '../../lib/Scroller/min/index.min';
 import { CSSTransitionGroup } from 'react-transition-group' // ES6
 import industry from '../../config/industry.json'
 import style from './index.module.scss'
@@ -14,6 +14,8 @@ import StoreNavDis from './StoreNavDis'
 import StoreNavSort from './StoreNavSort'
 import StoreItem from './storeItem'
 import { hashHistory } from 'react-router';
+
+
 
 class AppComponent extends React.Component {
   constructor(props){
